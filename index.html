@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title> Angular JS json tutorial </title>
+<script type="text/javascript" src="bower_components/angular/angular.min.js"></script> 
+<script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script> 
+<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="assets/css/style.css">
+<script type="text/javascript" src="app/components/users/app.module.js"></script>
+<script type="text/javascript" src="app/components/users/user.service.js"></script> 
+<script type="text/javascript" src="app/components/users/user.controller.js"></script> 
+</head>
+<body role="document" ng-controller="usrController">
+<div class="container theme-showcase" role="main">
+<H1>Hello Admin ! </H1>
+<div class="page-header" >
+<nav class="navbar navbar-default">
+<div class="container">
+<div class="navbar-header">
+<button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+<span class="sr-only"> Toggle navigation </span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<a href="#" class="navbar-brand"> Project Name </a>
+</div>
+<div class="navbar-collapse collapse">
+<ul class="nav navbar-nav">
+<li class="active"> <a href="#"> Home </a> </li>
+<li> <a href="#about"> About </a> </li>
+<li> <a href="#contact"> Contact </a> </li>
+</ul>
+</div>
+</div>
+</nav>
+<H2> List of Users </H2> 
+<div class="row m-y-1">
+<div class="col-md-3 pull-left"> <button ng-click="toggleAddNew()" class="text-success"> Add New </button>  </div>
+<div class="col-md-9 pull-right"> Search : <input type="text" ng-model="searchKeyword" value=""> </div>
+<div class="clearfix"></div>
+</div>
+<div class="row">
+<div class="col-md-6">
+<table class="table table-bordered">
+<thead>
+
+<tr> <th> ID </th> <th> First Name </th> <th> Last Name </th><th> Contact No </th><th> Email </th><th> ID </th> <th> Delete </th><th> Edit </th> </tr>
+<tbody>
+<tr ng-repeat="urs in users | filter:searchKeyword">
+<td> {{$index + 1}} </td>
+ <td ng-click="usrEdit(urs.id)" ng-bind="urs.firstname"> </td> 
+ <td ng-bind="urs.lastname"> </td> 
+
+ <td ng-bind="urs.contactno"> </td>
+ <td ng-bind="urs.email"></td>
+<td ng-bind="urs.id"></td>
+<td ng-click="usrDelete(urs.id)"> Delete</td>
+<td ng-click="usrEditLoad(urs.id)"> Edit</td>
+ </tr>
+<tr><td><span ng-bind="delUserMsg"></span></td></tr>
+</tbody>
+</table>
+</div>
+<div class="clearfix"></div>
+
+<div class="form-group col-md-9" novalidate ng-show="showAddForm">
+<div class="row"> <button class="close" ng-click="toggleAddNew()" aria-label="close"> <span aria-hidden="true">&times; Close</span> </button> </div> 
+<form ng-submit="usrController.usrSubmit()" name="addUserForm">
+<H2> Add New User </H2> 
+<div class="clearfix"></div>
+<div class="row"> <span class="col-md-2"> First Name : </span> <span> <input type="text" name="firstname" ng-model="newUser.firstname" required ng-minlength="4"></span> </div>
+<div class="clearfix"></div>
+<div class="row"><span ng-show="addUserForm.firstname.$error.required">
+This is a required field </span>
+</div>
+<div class="row"> <span class="col-md-2"> Last Name : </span> <span> <input type="text" name="lastname" ng-model="newUser.lastname" required ng-minlength="1"> </span> </div>
+<div class="row"> <span class="col-md-2"> Email : </span> <span> <input type="email" name="email" ng-model="newUser.email"> </span> </div>   
+<div class="row"> <span class="col-md-2"> ContactNo : </span> <span> <input type="text" name="contactno" ng-model="newUser.contactno"> </span> </div>   
+<div class="row"> <input class="btn btn-lg btn-default" type="submit" title="Click Here" ng-disabled="addUserForm.$invalid" ng-click="usrSubmit()" >Submit</button> </div>
+</form>
+</div>
+<div class="clearfix"></div>
+
+<div class="form-group col-md-9" novalidate ng-show="showEditForm">
+<div class="row"> <button class="close" ng-click="toggleEdit()" aria-label="close"> <span aria-hidden="true">&times; Close</span> </button> </div> 
+<form ng-submit="usrController.usrUpdate()" name="editUserForm">
+<H2> Edit User Details </H2> 
+<div class="clearfix"></div>
+<div class="row"> <span class="col-md-2"> First Name : </span> <span> <input type="text" name="efirstname" ng-model="editUser.firstname" required ng-minlength="4"></span>
+<input type="text" name="eid" ng-model="editUser.id" >
+ </div>
+<div class="clearfix"></div>
+<div class="row"><span ng-show="editUserForm.efirstname.$error.required">
+This is a required field </span>
+</div>
+<div class="row"> <span class="col-md-2"> Last Name : </span> <span> <input type="text" name="elastname" ng-model="editUser.lastname" required ng-minlength="1"> </span> </div>
+<div class="row"> <span class="col-md-2"> Email : </span> <span> <input type="email" name="eemail" ng-model="editUser.email"> </span> </div>   
+<div class="row"> <span class="col-md-2"> ContactNo : </span> <span> <input type="text" name="econtactno" ng-model="editUser.contactno"> </span> </div>   
+<div class="row"> <input class="btn btn-lg btn-default" type="submit" title="Click Here" ng-disabled="editUserForm.$invalid" ng-click="usrUpdate()" value="Update"></button> </div>
+</form>
+</div>
+<div class="clearfix"></div>
+
+</div>
+</div>
+</body>
+</html>
+

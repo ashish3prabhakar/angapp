@@ -1,0 +1,19 @@
+.container dl {
+width:100%;
+margin-left:auto;
+}
+.container dt, .container dd {
+width: 40%;
+margin-left:auto;
+text-align:left;
+padding-bottom:1rem;
+}
+
+.chover {
+cursor : pointer;
+}
+
+.m-y-1 {
+margin:10px 0 10px !important;
+}
+

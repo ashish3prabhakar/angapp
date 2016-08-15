@@ -1,0 +1,25 @@
+{
+  "name": "angapp",
+  "description": "angular js trial project",
+  "main": "main",
+  "keywords": [
+    "angular",
+    "js"
+  ],
+  "authors": [
+    "ashish prabhakar"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-ui-router": "^0.3.1"
+  }
+}
